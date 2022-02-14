@@ -1,5 +1,7 @@
 includedir=/usr/include/efi
+libdir=/usr/lib
 Name: gnu-efi
-Description: GNU toolchain for building applications that can run in the environment presented by Intel's EFI.
+Description: Library for developing EFI applications
 Version: 3.0.9-1
 Cflags: -I${includedir}
+Libs: -L${libdir} #-lefi
