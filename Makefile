@@ -1,11 +1,19 @@
 CC      = $(CC_PREFIX)-gcc
 CFLAGS  = -std=c11 -O2 -ffreestanding -mno-red-zone -fno-stack-protector -Wshadow -Wall -Wunused -Werror-implicit-function-declaration -Werror
+# FIXME(jeff): x86_64-w64-mingw32 headers must be configured to point to our
+# local gnu-efi header files and library path at /usr/include and /usr/lib,
+# respectively.
+# GNUEFI_INC = $(pkg-config --cflags gnu-efi)
+# GNUEFI_LIB = $(pkg-config --libs gnu-efi)
+# GNUEFI_ARCH = x86_64
+GNUEFI_INC = /usr/include/efi
+GNUEFI_LIB = /usr/lib
 CFLAGS += -I$(GNUEFI_INC) -I$(GNUEFI_INC)/$(GNUEFI_ARCH) -I$(GNUEFI_INC)/protocol
 LDFLAGS = -nostdlib -shared -Wl,-dll -Wl,--subsystem,10 -e _EfiMain
-LIBS    = -L$(GNUEFI_LIB) -lefi -lgcc
+LIBS    = -L$(GNUEFI_LIB) -lgcc  # -lefi
 
-GNUEFI_INC = /usr/$(CC_PREFIX)/include/efi
-GNUEFI_LIB = /usr/$(CC_PREFIX)/lib
+# GNUEFI_INC = /usr/$(CC_PREFIX)/include/efi
+# GNUEFI_LIB = /usr/$(CC_PREFIX)/lib
 
 FILES_C = src/main.c src/util.c src/types.c src/config.c
 FILES_H = $(wildcard src/*.h)
