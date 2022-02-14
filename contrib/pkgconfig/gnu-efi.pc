@@ -1,0 +1,5 @@
+includedir=/usr/include/efi
+Name: gnu-efi
+Description: GNU toolchain for building applications that can run in the environment presented by Intel's EFI.
+Version: 3.0.9-1
+Cflags: -I${includedir}
